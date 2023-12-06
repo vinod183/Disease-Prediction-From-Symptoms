@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Symptom Selector</title>
+    <script>
+        // Function to fetch symptoms and populate the dropdown
+        function populateSymptoms() {
+            fetch('symptoms.json')
+                .then(response => response.json())
+                .then(symptomsData => {
+                    var select = document.getElementById('symptomSelect'); // Get the select element
+
+                    // Loop through each key in the JSON object and add it as an option in the select dropdown
+                    for (var symptom in symptomsData) {
+                        if (symptomsData.hasOwnProperty(symptom)) {
+                            var option = document.createElement('option');
+                            option.value = symptom;
+                            option.textContent = symptom;
+                            select.appendChild(option);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching symptoms:', error);
+                });
+        }
+
+        // Function to generate the dictionary when the form is submitted
+        function generateDictionary() {
+            var symptoms = {}; // Empty dictionary to store selected symptoms
+            var select = document.getElementById('symptomSelect'); // Get the select element
+
+            // Loop through each option in the select element
+            for (var i = 0; i < select.options.length; i++) {
+                var option = select.options[i];
+                symptoms[option.value] = option.selected ? 1 : 0; // Mark selected symptoms as 1 and unselected as 0
+            }
+
+            // Display the generated dictionary in the console (for demonstration)
+            console.log(symptoms);
+
+            // Here you can send the generated dictionary to your backend or perform further actions
+        }
+    </script>
+</head>
+<body onload="populateSymptoms()">
+    <h1>Select Symptoms</h1>
+    <form onsubmit="generateDictionary(); return false;">
+        <label for="symptomSelect">Select Symptoms (Ctrl+Click to select multiple):</label><br>
+        <select id="symptomSelect" multiple>
+            <!-- Symptoms will be dynamically added here -->
+        </select><br><br>
+        <input type="submit" value="Generate Dictionary">
+    </form>
+</body>
+</html>
