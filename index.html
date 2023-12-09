@@ -1,56 +1,692 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Symptom Selector</title>
-    <script>
-        // Function to fetch symptoms and populate the dropdown
-        function populateSymptoms() {
-            fetch('symptoms.json')
-                .then(response => response.json())
-                .then(symptomsData => {
-                    var select = document.getElementById('symptomSelect'); // Get the select element
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+         body {
+            background-image: url(img1.jpeg);
+            background-size: cover;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 100px;
 
-                    // Loop through each key in the JSON object and add it as an option in the select dropdown
-                    for (var symptom in symptomsData) {
-                        if (symptomsData.hasOwnProperty(symptom)) {
-                            var option = document.createElement('option');
-                            option.value = symptom;
-                            option.textContent = symptom;
-                            select.appendChild(option);
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching symptoms:', error);
-                });
-        }
+  }
+  nav {
+	margin: 27px auto 0;
 
-        // Function to generate the dictionary when the form is submitted
-        function generateDictionary() {
-            var symptoms = {}; // Empty dictionary to store selected symptoms
-            var select = document.getElementById('symptomSelect'); // Get the select element
+	position: relative;
+	width: 590px;
+	height: 50px;
+	background-color: #34495e;
+	border-radius: 8px;
+	font-size: 0;
+}
+nav a {
+	line-height: 50px;
+	height: 100%;
+	font-size: 15px;
+	display: inline-block;
+	position: relative;
+	z-index: 1;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+}
+nav .animation {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	z-index: 0;
+	transition: all .5s ease 0s;
+	border-radius: 8px;
+}
+a:nth-child(1) {
+	width: 100px;
+}
+a:nth-child(2) {
+	width: 110px;
+}
+a:nth-child(3) {
+	width: 100px;
+}
+a:nth-child(4) {
+	width: 160px;
+}
+a:nth-child(5) {
+	width: 120px;
+}
+nav .start-home, a:nth-child(1):hover~.animation {
+	width: 100px;
+	left: 0;
+	background-color: #1abc9c;
+}
+nav .start-about, a:nth-child(2):hover~.animation {
+	width: 110px;
+	left: 100px;
+	background-color: #e74c3c;
+}
+nav .start-blog, a:nth-child(3):hover~.animation {
+	width: 100px;
+	left: 210px;
+	background-color: #3498db;
+}
+nav .start-portefolio, a:nth-child(4):hover~.animation {
+	width: 160px;
+	left: 310px;
+	background-color: #9b59b6;
+}
+nav .start-contact, a:nth-child(5):hover~.animation {
+	width: 120px;
+	left: 470px;
+	background-color: #e67e22;
+}
 
-            // Loop through each option in the select element
-            for (var i = 0; i < select.options.length; i++) {
-                var option = select.options[i];
-                symptoms[option.value] = option.selected ? 1 : 0; // Mark selected symptoms as 1 and unselected as 0
-            }
+body {
+	font-size: 12px;
+	font-family: sans-serif;
+	background: #2c3e50;
+}
+h1 {
+	text-align: center;
+	margin: 40px 0 40px;
+	text-align: center;
+	font-size: 30px;
+	color: #ecf0f1;
+	text-shadow: 2px 2px 4px #000000;
+	font-family: 'Cherry Swash', cursive;
+}
 
-            // Display the generated dictionary in the console (for demonstration)
-            console.log(symptoms);
+p {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: #ecf0f1;
+    font-family: 'Cherry Swash',cursive;
+    font-size: 16px;
+}
 
-            // Here you can send the generated dictionary to your backend or perform further actions
-        }
-    </script>
+span {
+    color: #2BD6B4;
+}
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"], select {
+    width: 95%;
+    padding: 10px;
+    margin: 1px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  #selectedSymptomsDisplay {
+    margin-top: 20px;
+  }
+   
+    </style>
 </head>
-<body onload="populateSymptoms()">
-    <h1>Select Symptoms</h1>
-    <form onsubmit="generateDictionary(); return false;">
-        <label for="symptomSelect">Select Symptoms (Ctrl+Click to select multiple):</label><br>
-        <select id="symptomSelect" multiple>
-            <!-- Symptoms will be dynamically added here -->
-        </select><br><br>
-        <input type="submit" value="Generate Dictionary">
+<body>
+    <h1>Diseases prediction from symptoms</h1>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Portefolio</a>
+        <a href="#">Contact</a>
+        <div class="animation start-home"></div>
+    </nav>
+    <h1>Welcome to my webpage</h1>
+    <form id="symptomForm">
+        <input type="text" id="searchBox" placeholder="Search symptoms..."><br>
+        <select multiple id="symptoms" name="symptoms[]">
+            <option value="shortness of breath">shortness of breath</option>
+            <option value="dizziness">dizziness</option>
+            <option value="asthenia">asthenia</option>
+            <option value="fall">fall</option>
+            <option value="syncope">syncope</option>
+            <option value="vertigo">vertigo</option>
+            <option value="sweat">sweat</option>
+            <option value="sweating increased">sweating increased</option>
+            <option value="palpitation">palpitation</option>
+            <option value="nausea">nausea</option>
+            <option value="angina pectoris">angina pectoris</option>
+            <option value="pressure chest">pressure chest</option>
+            <option value="polyuria">polyuria</option>
+            <option value="polydypsia">polydypsia</option>
+            <option value="pain chest">pain chest</option>
+            <option value="orthopnea">orthopnea</option>
+            <option value="rale">rale</option>
+            <option value="unresponsiveness">unresponsiveness</option>
+            <option value="mental status changes">mental status changes</option>
+            <option value="vomiting">vomiting</option>
+            <option value="labored breathing">labored breathing</option>
+            <option value="feeling suicidal">feeling suicidal</option>
+            <option value="suicidal">suicidal</option>
+            <option value="hallucinations auditory">hallucinations auditory</option>
+            <option value="feeling hopeless">feeling hopeless</option>
+            <option value="weepiness">weepiness</option>
+            <option value="sleeplessness">sleeplessness</option>
+            <option value="motor retardation">motor retardation</option>
+            <option value="irritable mood">irritable mood</option>
+            <option value="blackout">blackout</option>
+            <option value="mood depressed">mood depressed</option>
+            <option value="hallucinations visual">hallucinations visual</option>
+            <option value="worry">worry</option>
+            <option value="agitation">agitation</option>
+            <option value="tremor">tremor</option>
+            <option value="intoxication">intoxication</option>
+            <option value="verbal auditory hallucinations">verbal auditory hallucinations</option>
+            <option value="energy increased">energy increased</option>
+            <option value="difficulty">difficulty</option>
+            <option value="nightmare">nightmare</option>
+            <option value="unable to concentrate">unable to concentrate</option>
+            <option value="homelessness">homelessness</option>
+            <option value="hypokinesia">hypokinesia</option>
+            <option value="dyspnea on exertion">dyspnea on exertion</option>
+            <option value="chest tightness">chest tightness</option>
+            <option value="cough">cough</option>
+            <option value="fever">fever</option>
+            <option value="decreased translucency">decreased translucency</option>
+            <option value="productive cough">productive cough</option>
+            <option value="pleuritic pain">pleuritic pain</option>
+            <option value="yellow sputum">yellow sputum</option>
+            <option value="breath sounds decreased">breath sounds decreased</option>
+            <option value="chill">chill</option>
+            <option value="rhonchus">rhonchus</option>
+            <option value="green sputum">green sputum</option>
+            <option value="non-productive cough">non-productive cough</option>
+            <option value="wheezing">wheezing</option>
+            <option value="haemoptysis">haemoptysis</option>
+            <option value="distress respiratory">distress respiratory</option>
+            <option value="tachypnea">tachypnea</option>
+            <option value="malaise">malaise</option>
+            <option value="night sweat">night sweat</option>
+            <option value="jugular venous distention">jugular venous distention</option>
+            <option value="dyspnea">dyspnea</option>
+            <option value="dysarthria">dysarthria</option>
+            <option value="speech slurred">speech slurred</option>
+            <option value="facial paresis">facial paresis</option>
+            <option value="hemiplegia">hemiplegia</option>
+            <option value="seizure">seizure</option>
+            <option value="numbness">numbness</option>
+            <option value="symptom aggravating factors">symptom aggravating factors</option>
+            <option value="st segment elevation">st segment elevation</option>
+            <option value="st segment depression">st segment depression</option>
+            <option value="t wave inverted">t wave inverted</option>
+            <option value="presence of q wave">presence of q wave</option>
+            <option value="chest discomfort">chest discomfort</option>
+            <option value="bradycardia">bradycardia</option>
+            <option value="pain">pain</option>
+            <option value="nonsmoker">nonsmoker</option>
+            <option value="erythema">erythema</option>
+            <option value="hepatosplenomegaly">hepatosplenomegaly</option>
+            <option value="pruritus">pruritus</option>
+            <option value="diarrhea">diarrhea</option>
+            <option value="abscess bacterial">abscess bacterial</option>
+            <option value="swelling">swelling</option>
+            <option value="apyrexial">apyrexial</option>
+            <option value="dysuria">dysuria</option>
+            <option value="hematuria">hematuria</option>
+            <option value="renal angle tenderness">renal angle tenderness</option>
+            <option value="lethargy">lethargy</option>
+            <option value="hyponatremia">hyponatremia</option>
+            <option value="hemodynamically stable">hemodynamically stable</option>
+            <option value="difficulty passing urine">difficulty passing urine</option>
+            <option value="consciousness clear">consciousness clear</option>
+            <option value="guaiac positive">guaiac positive</option>
+            <option value="monoclonal">monoclonal</option>
+            <option value="ecchymosis">ecchymosis</option>
+            <option value="tumor cell invasion">tumor cell invasion</option>
+            <option value="haemorrhage">haemorrhage</option>
+            <option value="pallor">pallor</option>
+            <option value="fatigue">fatigue</option>
+            <option value="heme positive">heme positive</option>
+            <option value="pain back">pain back</option>
+            <option value="orthostasis">orthostasis</option>
+            <option value="arthralgia">arthralgia</option>
+            <option value="transaminitis">transaminitis</option>
+            <option value="sputum purulent">sputum purulent</option>
+            <option value="hypoxemia">hypoxemia</option>
+            <option value="hypercapnia">hypercapnia</option>
+            <option value="patient non compliance">patient non compliance</option>
+            <option value="unconscious state">unconscious state</option>
+            <option value="bedridden">bedridden</option>
+            <option value="abdominal tenderness">abdominal tenderness</option>
+            <option value="unsteady gait">unsteady gait</option>
+            <option value="hyperkalemia">hyperkalemia</option>
+            <option value="urgency of micturition">urgency of micturition</option>
+            <option value="ascites">ascites</option>
+            <option value="hypotension">hypotension</option>
+            <option value="enuresis">enuresis</option>
+            <option value="asterixis">asterixis</option>
+            <option value="muscle twitch">muscle twitch</option>
+            <option value="sleepy">sleepy</option>
+            <option value="headache">headache</option>
+            <option value="lightheadedness">lightheadedness</option>
+            <option value="food intolerance">food intolerance</option>
+            <option value="numbness of hand">numbness of hand</option>
+            <option value="general discomfort">general discomfort</option>
+            <option value="drowsiness">drowsiness</option>
+            <option value="stiffness">stiffness</option>
+            <option value="prostatism">prostatism</option>
+            <option value="weight gain">weight gain</option>
+            <option value="tired">tired</option>
+            <option value="mass of body structure">mass of body structure</option>
+            <option value="has religious belief">has religious belief</option>
+            <option value="nervousness">nervousness</option>
+            <option value="formication">formication</option>
+            <option value="hot flush">hot flush</option>
+            <option value="lesion">lesion</option>
+            <option value="cushingoid facies">cushingoid facies</option>
+            <option value="cushingoid habitus">cushingoid habitus</option>
+            <option value="emphysematous change">emphysematous change</option>
+            <option value="decreased body weight">decreased body weight</option>
+            <option value="hoarseness">hoarseness</option>
+            <option value="thicken">thicken</option>
+            <option value="spontaneous rupture of membranes">spontaneous rupture of membranes</option>
+            <option value="muscle hypotonia">muscle hypotonia</option>
+            <option value="hypotonic">hypotonic</option>
+            <option value="redness">redness</option>
+            <option value="hypesthesia">hypesthesia</option>
+            <option value="hyperacusis">hyperacusis</option>
+            <option value="scratch marks">scratch marks</option>
+            <option value="sore to touch">sore to touch</option>
+            <option value="burning sensation">burning sensation</option>
+            <option value="satiety early">satiety early</option>
+            <option value="throbbing sensation quality">throbbing sensation quality</option>
+            <option value="sensory discomfort">sensory discomfort</option>
+            <option value="constipation">constipation</option>
+            <option value="pain abdominal">pain abdominal</option>
+            <option value="heartburn">heartburn</option>
+            <option value="breech presentation">breech presentation</option>
+            <option value="cyanosis">cyanosis</option>
+            <option value="pain in lower limb">pain in lower limb</option>
+            <option value="cardiomegaly">cardiomegaly</option>
+            <option value="clonus">clonus</option>
+            <option value="unwell">unwell</option>
+            <option value="anorexia">anorexia</option>
+            <option value="history of - blackout">history of - blackout</option>
+            <option value="anosmia">anosmia</option>
+            <option value="metastatic lesion">metastatic lesion</option>
+            <option value="hemianopsia homonymous">hemianopsia homonymous</option>
+            <option value="hematocrit decreased">hematocrit decreased</option>
+            <option value="neck stiffness">neck stiffness</option>
+            <option value="cicatrisation">cicatrisation</option>
+            <option value="hypometabolism">hypometabolism</option>
+            <option value="aura">aura</option>
+            <option value="myoclonus">myoclonus</option>
+            <option value="gurgle">gurgle</option>
+            <option value="wheelchair bound">wheelchair bound</option>
+            <option value="left atrial hypertrophy">left atrial hypertrophy</option>
+            <option value="oliguria">oliguria</option>
+            <option value="catatonia">catatonia</option>
+            <option value="unhappy">unhappy</option>
+            <option value="paresthesia">paresthesia</option>
+            <option value="gravida 0">gravida 0</option>
+            <option value="lung nodule">lung nodule</option>
+            <option value="distended abdomen">distended abdomen</option>
+            <option value="ache">ache</option>
+            <option value="macerated skin">macerated skin</option>
+            <option value="heavy feeling">heavy feeling</option>
+            <option value="rest pain">rest pain</option>
+            <option value="sinus rhythm">sinus rhythm</option>
+            <option value="withdraw">withdraw</option>
+            <option value="behavior hyperactive">behavior hyperactive</option>
+            <option value="terrify">terrify</option>
+            <option value="photopsia">photopsia</option>
+            <option value="giddy mood">giddy mood</option>
+            <option value="disturbed family">disturbed family</option>
+            <option value="hypersomnia">hypersomnia</option>
+            <option value="hyperhidrosis disorder">hyperhidrosis disorder</option>
+            <option value="mydriasis">mydriasis</option>
+            <option value="extrapyramidal sign">extrapyramidal sign</option>
+            <option value="loose associations">loose associations</option>
+            <option value="exhaustion">exhaustion</option>
+            <option value="snore">snore</option>
+            <option value="r wave feature">r wave feature</option>
+            <option value="overweight">overweight</option>
+            <option value="systolic murmur">systolic murmur</option>
+            <option value="asymptomatic">asymptomatic</option>
+            <option value="splenomegaly">splenomegaly</option>
+            <option value="bleeding of vagina">bleeding of vagina</option>
+            <option value="macule">macule</option>
+            <option value="photophobia">photophobia</option>
+            <option value="painful swallowing">painful swallowing</option>
+            <option value="cachexia">cachexia</option>
+            <option value="hypocalcemia result">hypocalcemia result</option>
+            <option value="hypothermia, natural">hypothermia, natural</option>
+            <option value="atypia">atypia</option>
+            <option value="general unsteadiness">general unsteadiness</option>
+            <option value="throat sore">throat sore</option>
+            <option value="snuffle">snuffle</option>
+            <option value="hacking cough">hacking cough</option>
+            <option value="stridor">stridor</option>
+            <option value="paresis">paresis</option>
+            <option value="aphagia">aphagia</option>
+            <option value="focal seizures">focal seizures</option>
+            <option value="abnormal sensation">abnormal sensation</option>
+            <option value="stupor">stupor</option>
+            <option value="fremitus">fremitus</option>
+            <option value="Stahli's line">Stahli's line</option>
+            <option value="stinging sensation">stinging sensation</option>
+            <option value="paralyse">paralyse</option>
+            <option value="hirsutism">hirsutism</option>
+            <option value="sniffle">sniffle</option>
+            <option value="bradykinesia">bradykinesia</option>
+            <option value="out of breath">out of breath</option>
+            <option value="urge incontinence">urge incontinence</option>
+            <option value="vision blurred">vision blurred</option>
+            <option value="room spinning">room spinning</option>
+            <option value="rambling speech">rambling speech</option>
+            <option value="clumsiness">clumsiness</option>
+            <option value="decreased stool caliber">decreased stool caliber</option>
+            <option value="hematochezia">hematochezia</option>
+            <option value="egophony">egophony</option>
+            <option value="scar tissue">scar tissue</option>
+            <option value="neologism">neologism</option>
+            <option value="decompensation">decompensation</option>
+            <option value="stool color yellow">stool color yellow</option>
+            <option value="rigor - temperature-associated observation">rigor - temperature-associated observation</option>
+            <option value="paraparesis">paraparesis</option>
+            <option value="moody">moody</option>
+            <option value="fear of falling">fear of falling</option>
+            <option value="spasm">spasm</option>
+            <option value="hyperventilation">hyperventilation</option>
+            <option value="excruciating pain">excruciating pain</option>
+            <option value="gag">gag</option>
+            <option value="posturing">posturing</option>
+            <option value="pulse absent">pulse absent</option>
+            <option value="dysesthesia">dysesthesia</option>
+            <option value="polymyalgia">polymyalgia</option>
+            <option value="passed stones">passed stones</option>
+            <option value="qt interval prolonged">qt interval prolonged</option>
+            <option value="ataxia">ataxia</option>
+            <option value="Heberden's node">Heberden's node</option>
+            <option value="hepatomegaly">hepatomegaly</option>
+            <option value="sciatica">sciatica</option>
+            <option value="frothy sputum">frothy sputum</option>
+            <option value="mass in breast">mass in breast</option>
+            <option value="retropulsion">retropulsion</option>
+            <option value="estrogen use">estrogen use</option>
+            <option value="hypersomnolence">hypersomnolence</option>
+            <option value="underweight">underweight</option>
+            <option value="dullness">dullness</option>
+            <option value="red blotches">red blotches</option>
+            <option value="colic abdominal">colic abdominal</option>
+            <option value="hypokalemia">hypokalemia</option>
+            <option value="hunger">hunger</option>
+            <option value="prostate tender">prostate tender</option>
+            <option value="pain foot">pain foot</option>
+            <option value="urinary hesitation">urinary hesitation</option>
+            <option value="disequilibrium">disequilibrium</option>
+            <option value="flushing">flushing</option>
+            <option value="indifferent mood">indifferent mood</option>
+            <option value="urinoma">urinoma</option>
+            <option value="hypoalbuminemia">hypoalbuminemia</option>
+            <option value="pustule">pustule</option>
+            <option value="slowing of urinary stream">slowing of urinary stream</option>
+            <option value="extreme exhaustion">extreme exhaustion</option>
+            <option value="no status change">no status change</option>
+            <option value="breakthrough pain">breakthrough pain</option>
+            <option value="pansystolic murmur">pansystolic murmur</option>
+            <option value="systolic ejection murmur">systolic ejection murmur</option>
+            <option value="stuffy nose">stuffy nose</option>
+            <option value="barking cough">barking cough</option>
+            <option value="rapid shallow breathing">rapid shallow breathing</option>
+            <option value="noisy respiration">noisy respiration</option>
+            <option value="nasal discharge present">nasal discharge present</option>
+            <option value="frail">frail</option>
+            <option value="cystic lesion">cystic lesion</option>
+            <option value="projectile vomiting">projectile vomiting</option>
+            <option value="heavy legs">heavy legs</option>
+            <option value="titubation">titubation</option>
+            <option value="dysdiadochokinesia">dysdiadochokinesia</option>
+            <option value="achalasia">achalasia</option>
+            <option value="side pain">side pain</option>
+            <option value="monocytosis">monocytosis</option>
+            <option value="posterior rhinorrhea">posterior rhinorrhea</option>
+            <option value="incoherent">incoherent</option>
+            <option value="lameness">lameness</option>
+            <option value="claudication">claudication</option>
+            <option value="clammy skin">clammy skin</option>
+            <option value="mediastinal shift">mediastinal shift</option>
+            <option value="nausea and vomiting">nausea and vomiting</option>
+            <option value="awakening early">awakening early</option>
+            <option value="tenesmus">tenesmus</option>
+            <option value="fecaluria">fecaluria</option>
+            <option value="pneumatouria">pneumatouria</option>
+            <option value="todd paralysis">todd paralysis</option>
+            <option value="alcoholic withdrawal symptoms">alcoholic withdrawal symptoms</option>
+            <option value="myalgia">myalgia</option>
+            <option value="dyspareunia">dyspareunia</option>
+            <option value="poor dentition">poor dentition</option>
+            <option value="floppy">floppy</option>
+            <option value="inappropriate affect">inappropriate affect</option>
+            <option value="poor feeding">poor feeding</option>
+            <option value="moan">moan</option>
+            <option value="welt">welt</option>
+            <option value="tinnitus">tinnitus</option>
+            <option value="hydropneumothorax">hydropneumothorax</option>
+            <option value="superimposition">superimposition</option>
+            <option value="feeling strange">feeling strange</option>
+            <option value="uncoordination">uncoordination</option>
+            <option value="absences finding">absences finding</option>
+            <option value="tonic seizures">tonic seizures</option>
+            <option value="debilitation">debilitation</option>
+            <option value="impaired cognition">impaired cognition</option>
+            <option value="drool">drool</option>
+            <option value="pin-point pupils">pin-point pupils</option>
+            <option value="tremor resting">tremor resting</option>
+            <option value="groggy">groggy</option>
+            <option value="adverse reaction">adverse reaction</option>
+            <option value="adverse effect">adverse effect</option>
+            <option value="abdominal bloating">abdominal bloating</option>
+            <option value="fatigability">fatigability</option>
+            <option value="para 2">para 2</option>
+            <option value="abortion">abortion</option>
+            <option value="intermenstrual heavy bleeding">intermenstrual heavy bleeding</option>
+            <option value="previous pregnancies 2">previous pregnancies 2</option>
+            <option value="primigravida">primigravida</option>
+            <option value="abnormally hard consistency">abnormally hard consistency</option>
+            <option value="proteinemia">proteinemia</option>
+            <option value="pain neck">pain neck</option>
+            <option value="dizzy spells">dizzy spells</option>
+            <option value="shooting pain">shooting pain</option>
+            <option value="hyperemesis">hyperemesis</option>
+            <option value="milky">milky</option>
+            <option value="regurgitates after swallowing">regurgitates after swallowing</option>
+            <option value="lip smacking">lip smacking</option>
+            <option value="phonophobia">phonophobia</option>
+            <option value="rolling of eyes">rolling of eyes</option>
+            <option value="ambidexterity">ambidexterity</option>
+            <option value="pulsus paradoxus">pulsus paradoxus</option>
+            <option value="gravida 10">gravida 10</option>
+            <option value="bruit">bruit</option>
+            <option value="breath-holding spell">breath-holding spell</option>
+            <option value="scleral icterus">scleral icterus</option>
+            <option value="retch">retch</option>
+            <option value="blanch">blanch</option>
+            <option value="elation">elation</option>
+            <option value="verbally abusive behavior">verbally abusive behavior</option>
+            <option value="transsexual">transsexual</option>
+            <option value="behavior showing increased motor activity">behavior showing increased motor activity</option>
+            <option value="coordination abnormal">coordination abnormal</option>
+            <option value="choke">choke</option>
+            <option value="bowel sounds decreased">bowel sounds decreased</option>
+            <option value="no known drug allergies">no known drug allergies</option>
+            <option value="low back pain">low back pain</option>
+            <option value="charleyhorse">charleyhorse</option>
+            <option value="sedentary">sedentary</option>
+            <option value="feels hot/feverish">feels hot/feverish</option>
+            <option value="flare">flare</option>
+            <option value="pericardial friction rub">pericardial friction rub</option>
+            <option value="hoard">hoard</option>
+            <option value="panic">panic</option>
+            <option value="cardiovascular finding">cardiovascular finding</option>
+            <option value="cardiovascular event">cardiovascular event</option>
+            <option value="soft tissue swelling">soft tissue swelling</option>
+            <option value="rhd positive">rhd positive</option>
+            <option value="para 1">para 1</option>
+            <option value="nasal flaring">nasal flaring</option>
+            <option value="sneeze">sneeze</option>
+            <option value="hypertonicity">hypertonicity</option>
+            <option value="Murphy's sign">Murphy's sign</option>
+            <option value="flatulence">flatulence</option>
+            <option value="gasping for breath">gasping for breath</option>
+            <option value="feces in rectum">feces in rectum</option>
+            <option value="prodrome">prodrome</option>
+            <option value="hypoproteinemia">hypoproteinemia</option>
+            <option value="alcohol binge episode">alcohol binge episode</option>
+            <option value="abdomen acute">abdomen acute</option>
+            <option value="air fluid level">air fluid level</option>
+            <option value="catching breath">catching breath</option>
+            <option value="large-for-dates fetus">large-for-dates fetus</option>
+            <option value="immobile">immobile</option>
+            <option value="homicidal thoughts">homicidal thoughts</option>
+            </select>
+        <button type="submit">Submit</button>
+        <input type="text" id="searchBox" placeholder=""><br>
     </form>
+
+    <div id="selectedSymptomsDisplay"></div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#searchBox').on('input', function() {
+            var searchText = $(this).val().toLowerCase();
+            $('#symptoms option').each(function() {
+                var optionText = $(this).text().toLowerCase();
+                var showOption = optionText.indexOf(searchText) > -1;
+                $(this).toggle(showOption);
+            });
+        });
+    });
+
+    document.getElementById('symptomForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    let symptomsDropdown = document.getElementById('symptoms');
+    let selectedSymptoms = {};
+    
+    for (let i = 0; i < symptomsDropdown.options.length; i++) {
+        let symptom = symptomsDropdown.options[i];
+        selectedSymptoms[symptom.value] = symptom.selected ? 1 : 0;
+    }
+    displaySelectedSymptoms(selectedSymptoms);
+    
+    // Send selectedSymptoms to the backend
+    fetch('/predict1', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(selectedSymptoms),
+    })
+    .then(response => {
+        // Handle response from the backend
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        // Process data received from the backend
+        console.log("Response from backend: ",data);
+        // Handle the response data as needed
+    })
+    .catch(error => {
+        // Handle errors
+        console.error('There was an error with the fetch operation:', error);
+    });
+});
+
+ // Search functionality without deselecting options
+ document.getElementById('searchBox').addEventListener('input', function(event) {
+            let searchText = this.value.toLowerCase();
+            let symptomsDropdown = document.getElementById('symptoms');
+
+            for (let i = 0; i < symptomsDropdown.options.length; i++) {
+                let option = symptomsDropdown.options[i];
+                let optionText = option.textContent.toLowerCase();
+                let showOption = optionText.includes(searchText);
+
+                option.style.display = showOption ? 'block' : 'none';
+            }
+        });
+        
+        // Preserve selected options while searching
+        document.getElementById('searchBox').addEventListener('focus', function(event) {
+            let symptomsDropdown = document.getElementById('symptoms');
+
+            for (let i = 0; i < symptomsDropdown.options.length; i++) {
+                let option = symptomsDropdown.options[i];
+                if (option.selected) {
+                    option.setAttribute('data-selected', 'selected');
+                }
+            }
+        });
+
+        document.getElementById('searchBox').addEventListener('blur', function(event) {
+            let symptomsDropdown = document.getElementById('symptoms');
+
+            for (let i = 0; i < symptomsDropdown.options.length; i++) {
+                let option = symptomsDropdown.options[i];
+                if (option.getAttribute('data-selected') === 'selected') {
+                    option.selected = true;
+                } else {
+                    option.selected = false;
+                }
+                option.removeAttribute('data-selected');
+            }
+        });
+
+function displaySelectedSymptoms(symptoms) {
+            let displayDiv = document.getElementById('selectedSymptomsDisplay');
+            var symptomsString = JSON.stringify(symptoms);
+            displayDiv.innerHTML = '<h2>Selected Symptoms</h2>'+symptomsString;
+            
+            let list = document.createElement('ul');
+            for (const [symptom, value] of Object.entries(symptoms)) {
+                let listItem = document.createElement('li');
+                listItem.textContent = ${symptom}: ${value};
+                list.appendChild(listItem);
+            }
+            
+            displayDiv.appendChild(list);
+        }
+
+</script>
+
 </body>
 </html>
